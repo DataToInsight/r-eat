@@ -1,0 +1,9 @@
+Package: reat
+Type: Package
+Title: R Eat data
+Version: 1.0
+Date: 2015-06-05
+Author: Gerben Oostra
+Maintainer: Gerben Oostra <gerben.oostra@trifinance.nl>
+Description: Given data definition files, reads, assigns types, filters rows and columns, and stores them in a database. The data definition files allow automatic type inferrences for all or some columns, making it easy to load a lot of columns strongly typed. Some types, for example dates, also allow fall-back formats. All original (text) columns will still be available in the data base table for tracing purpose. The code is designed to run within Rmd files, writing a log of done transformations to the console.
+License: LGPL
