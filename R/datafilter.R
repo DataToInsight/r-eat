@@ -26,6 +26,9 @@ filter.rows <- function(x, keep, col.name, value, type, ...){
 
 # remove rows which are all na
 filter.rows.empty <- function(x, verbose=T){
+  if(nrow(x)==0){
+    return(x)
+  }
   if(verbose & sum(rowSums(na_or_empty_vals(x))>=ncol(x))){
     cat("Removed rows ", which(rowSums(na_or_empty_vals(x))>=ncol(x)), " because they contain only NA and empty values.  \r\n")
   }

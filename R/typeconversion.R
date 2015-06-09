@@ -192,6 +192,9 @@ as.POSIXct.verbose <- function(x, verbose=T, xname=NULL, ...){
 
 
 na_or_empty_vals <- function(x){ 
+  if(nrow(x)==0){
+    return(logical())
+  }
   nas <- is.na(x)
   emptys <- apply(x,1,function(x){nchar(as.character(x))})==0
   nas_or_emptys <- if(ncol(x)>1){ 
