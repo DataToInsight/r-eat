@@ -43,8 +43,8 @@ prepare.types <- function(x,
 	}
   # make case insensitive
   requestedCols <- tolower(col.names)
-  availabelCols <- tolower(colnames(x))
-	requireInSet(requestedCols, availabelCols, "Typechanged columns need to exist in dataframe.")
+  availableCols <- tolower(colnames(x))
+	requireInSet(requestedCols, availableCols, "Typechanged columns need to exist in dataframe.")
 
 	cols.included <- requestedCols
     if(length(col.ignore)>0){
@@ -56,7 +56,7 @@ prepare.types <- function(x,
                     ". Excluded cols=", paste(collapse=", ", col.ignore)))
 	}
   # back to case sensitive
-  cols.included <- colnames(x)[which(cols.included %in% availabelCols)]
+  cols.included <- colnames(x)[which(availableCols %in% cols.included)]
   # Now do change
 	if(trynumeric){
 		x <- columns.replace.and.add(x,
