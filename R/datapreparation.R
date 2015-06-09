@@ -41,18 +41,23 @@ prepare.types <- function(x,
 	if(is.numeric(col.names)){
 		col.names=colnames(x)[col.names]
 	}
-	requireInSet(col.names, colnames(x), "Typechanged columns need to exist in dataframe.")
+  # make case insensitive
+  requestedCols <- tolower(col.names)
+  availabelCols <- tolower(colnames(x))
+	requireInSet(requestedCols, availabelCols, "Typechanged columns need to exist in dataframe.")
 
-	cols.included <- col.names
+	cols.included <- requestedCols
     if(length(col.ignore)>0){
-      cols.included <- prob:::setdiff(cols.included, col.ignore)
+      cols.included <- prob:::setdiff(cols.included, tolower(col.ignore))
     }
 	if(length(cols.included)==0){
 		stop(paste0("Typechange is not applied on any columns. Included cols=",
 			        paste(collapse=", ",col.names),
                     ". Excluded cols=", paste(collapse=", ", col.ignore)))
 	}
-
+  # back to case sensitive
+  cols.included <- colnames(x)[which(cols.included %in% availabelCols)]
+  # Now do change
 	if(trynumeric){
 		x <- columns.replace.and.add(x,
 									 columns.trynumeric(x[, cols.included, drop=F], verbose=T, test=test))
