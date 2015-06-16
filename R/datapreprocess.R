@@ -1,7 +1,12 @@
 # makes the data R compatible (unique non-empty column names)
 preprocess.orig <- function(x){
-  empty_colnames<-colnames(x)==""
-  if(sum(empty_colnames)>0){
+	if(ncol(x)==0) {
+		warning("preprocess.orig received 0 columns")
+		return(x) #nothing to change
+	}
+  empty_colnames<- colnames(x)==""
+  empty_colnames[is.na(empty_colnames)] <- T
+  if(sum(empty_colnames, na.rm=T)>0){
     cat(paste0("Thera are ",sum(empty_colnames)," empty column names at indices ",paste0(collapse=", ",which(empty_colnames)),", they have been given name X with numeric sufixes:\r\n"))
     colnames(x)[empty_colnames]<-paste0("X",1:sum(empty_colnames)) 
   }
