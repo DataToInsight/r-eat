@@ -17,7 +17,7 @@ get.delimiter <- function(fn, n =10, skip = 0, ...){
 
 # determines itself wether to reat.csv or reat.csv2
 reat.csv <- function(path, skip=0, ...){
-	sep <- get.delimiter(path, n=2, skip=0, delims=c(';',','))
+	sep <- get.delimiter(path, n=1, skip=0, delims=c(';',','))
 	if(length(sep)!=1)
 		stop("no csv delimiter found")
 	else if(sep==';')
