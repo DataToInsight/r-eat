@@ -43,6 +43,14 @@ load.data <- function(datadef, connector, echo.Rmd=T, save=T){
       cat("```\r\n")
     }
   }
+  if(length(datadef$transforms)>0){
+	  if(echo.Rmd){
+		  cat("\r\n### Data transforms and enrichments \r\n")
+	  }
+	  for(transforms in datadef$transforms){
+		  datadef$prep <- transforms(datadef$prep)
+	  }
+  }
 
   # Filter rows
   if(length(datadef$filter)>0){
