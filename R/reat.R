@@ -142,7 +142,7 @@ load.data <- function(datadef, connector, echo.Rmd=T, save=T){
 
 save.data <- function(datadef, echo.Rmd=T){
 	if(echo.Rmd){
-		cat("\r\n## Saving to disk and database  \r\n")
+		cat("\r\nSaving to disk and database  \r\n")
 	}
 	if(is.null(datadef$row.names)){
 		datadef$row.names<-FALSE
