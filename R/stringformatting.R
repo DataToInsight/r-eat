@@ -83,6 +83,8 @@ trimmed.summary <- function(df, ...){
 #Gets the available line width from the R options, but is overridable by argument
 #The required column widths can also be provided, either 1 constant to be used for all columns, or a vector holding the width per column
 trimmed <- function(df, linewidth=NA, colwidth=NA){
+  if(nrow(df)==0)
+	  return(df)
   be_trimmed <- sapply(df, function(x){is.factor(x)|is.character(x)})
   if(is.na(colwidth)){
     availablewidth <- if(is.na(linewidth)){
