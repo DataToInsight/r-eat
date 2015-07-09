@@ -32,3 +32,11 @@ columns.replace.and.add <- function(x, y){
   }
   return(x)
 }
+
+rbindflex <- function(a, b, default=NA){
+  requireInSet(colnames(b), colnames(a), "Not all columns of b can be mapped to dataframe of a")
+  mergeable<-data.frame(matrix(data=default, nrow=nrow(b), ncol=ncol(a),
+                               dimnames=list(NULL,colnames(a))))
+  mergeable[,colnames(b)]<-b
+  rbind(a, mergeable)
+}
