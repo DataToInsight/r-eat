@@ -13,6 +13,9 @@ sqlDropTables <- function(dbhandle_create, tablenameregex){
 # Writes a table in an ODBC database. If the table already exists, it is first removed
 # Complements RODBC with compatibility with Date, POSIXt, logical and double precision data types.
 sql.replace<-function(dbconn, dat, tablename = NULL, replace=T, tight=T, row.names=T,...){
+  if(is.null(dim(dat))){
+    stop(paste0("provided data has no dimensions. Class=", paste(collapse=", ", class(dat))))
+  }
   # get the name of the variable passed as dat, taken from sqlSave implementation
   if (is.null(tablename)) 
     tablename <- if (length(substitute(dat)) == 1) 
@@ -100,7 +103,11 @@ export.save <- function(dbhandle, dat, tablename=NULL, row.names=F, replace=T, t
   else as.character(substitute(dat)[[2L]])
   if (length(tablename) != 1L) 
     stop(sQuote(tablename), " should be a name")
-  sql.replace(dbhandle, dat, tablename, row.names=row.names, replace=replace, tight=tight)
+  tryCatch(sql.replace(dbhandle, dat, tablename, row.names=row.names, replace=replace, tight=tight),
+           error=function(e){
+             message(paste0("Exception while storing table ", tablename))
+             stop(e)
+           })
 }
 
 # Loads a dataframe stored with export.save back from the database
